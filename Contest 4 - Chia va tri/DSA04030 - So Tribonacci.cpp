@@ -1,43 +1,55 @@
-#include <bits/stdc++.h>
-#define ll long long
+#include<bits/stdc++.h>
+#define _ 0
 using namespace std;
+using ll = long long;
 
-ll mod = 1e15 + 7;
-void Pow_Matrix(ll F[3][3], ll M[3][3]) {
-	ll dp[3][3];
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			ll res = 0;
-			for (int n = 0; n < 3; n++)
-				res = (res + ((F[i][n] % mod) * (M[n][j] % mod) % mod)) % mod;
-			dp[i][j] = res % mod;
+ll n;
+ll mod = 1000000000000007;
+ll M[5] = {1,3,6,12,23};
+
+struct matrix {
+	ll tribo[4][4] = {
+		{1,0,0,0},
+		{0,1,1,0},
+		{1,1,0,1},
+		{0,1,0,0}};
+};
+ll Mul(ll a, ll b) {
+	if (b <= 1) return a%mod * b;
+	ll tmp = Mul(a, b / 2);
+	if (b % 2 == 0)return tmp % mod + tmp % mod;
+	else return tmp % mod + tmp % mod + a % mod;
+}
+matrix operator*(matrix a, matrix b) {
+	matrix c;
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			c.tribo[i][j] = 0;
+			for (int k = 0; k < 4; k++) {
+				c.tribo[i][j] = c.tribo[i][j] % mod + Mul(a.tribo[i][k],b.tribo[k][j]) % mod;
+				c.tribo[i][j] %= mod;
+			}
 		}
 	}
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++)
-			F[i][j] = dp[i][j];
-	}
+	return c;
 }
-
-void Power(ll F[3][3], ll n) {
-	if (n == 1)
-		return;
-	ll M[3][3] = {{1, 1, 1}, {1, 0, 0}, {0, 1, 0}};
-	Power(F, n / 2);
-	Pow_Matrix(F, F);
-	if (n & 1)
-		Pow_Matrix(F, M);
+matrix Pow(matrix X, ll k) {
+	if (k == 1)return X;
+	matrix tmp = Pow(X, k / 2);
+	if (k % 2 == 0)return tmp * tmp;
+	else return tmp * tmp * X;
 }
-
+ll Tribonaci(ll n) {
+	if (n <= 5) return M[n - 1];
+	matrix X;
+	matrix S = Pow(X, n+2);
+	return S.tribo[2][0] - 1;
+}
 int main() {
-	int t;
-	cin >> t;
+	int t; cin >> t;	
 	while (t--) {
-		ll n;
 		cin >> n;
-		ll F[3][3] = {{1, 1, 1}, {1, 0, 0}, {0, 1, 0}};
-		Power(F, n);
-		cout << (4 * F[2][0] % mod + 2 * F[2][1] % mod + F[2][2] % mod - 1) % mod << "\n";
+		cout << Tribonaci(n) << "\n";
 	}
-	return 0;
+	return (0^_^0);
 }

@@ -6,15 +6,14 @@ int main() {
 	int T; cin >> T;
 	while (T--) {
 		int n; cin >> n;
-		int a[n+5], dp[n+5];
+		
+		int c[n][n];
 		for (int i = 0; i < n; ++i) {
-			cin >> a[i];
+			for (int j = 0; j < n; ++j) {
+				cin >> c[i][j];
+			}
 		}
-		dp[1] = a[0];
-		for(int i = 1; i < n; ++i){
-		    dp[i+1] = max(dp[i-1]+a[i], dp[i]);
-		}
-		cout << dp[n] << "\n";
+			
 	}
 
 	return (0^_^0);

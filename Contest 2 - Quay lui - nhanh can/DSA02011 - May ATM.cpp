@@ -21,18 +21,21 @@ void Try(int i, int x) {
 }
 
 int main() {
-	cin >> n >> s;
-	
-	for (int i = 1; i <= n; ++i) {
-		cin >> a[i];
+	int T; cin >> T;
+	while (T--) {
+		cin >> n >> s;	
+		for (int i = 1; i <= n; ++i) {
+			cin >> a[i];
+		}		
+		sum = 0, ans = 1e9+7;
+		check = false;
+		
+		Try(1, 1);
+		
+		check ? cout << ans : cout << "-1";
+		
+		cout << "\n";
 	}
-	
-	sum = 0, ans = 1e9+7;
-	check = false;
-	
-	Try(1, 1);
-	
-	check ? cout << ans : cout << "-1";
 	
 	return (0^_^0);
 }

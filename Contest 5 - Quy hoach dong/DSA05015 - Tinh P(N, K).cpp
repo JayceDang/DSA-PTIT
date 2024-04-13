@@ -3,7 +3,7 @@ using namespace std;
 #define _ 0
 
 const int mod = 1e9+7;
-int dp[1005][1005];
+long long dp[1005][1005];
 
 long long P(int n, int k) {
 	for (int i = 0; i <= n; ++i) {
@@ -11,7 +11,7 @@ long long P(int n, int k) {
 			if (j == 0)
 				dp[i][j] = 1;
 			else 
-				dp[i][j] = (dp[i-1][j] + j*dp[i-1][j-1]) % mod;
+				dp[i][j] = (dp[i-1][j]%mod+ (j%mod)*(dp[i-1][j-1]%mod)) % mod;
 				dp[i][j+1] = 0;
 		}
 	}
