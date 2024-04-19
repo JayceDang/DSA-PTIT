@@ -6,6 +6,8 @@ int a[100], n;
 vector<string> v;
 
 bool cmp(string a, string b) {
+	if (a.size() == b.size())
+		return a > b;
 	return a.size() > b.size();
 }
 
@@ -13,9 +15,9 @@ void printArr() {
 	string tmp = "";
 	for (int i = 1; i <= n; ++i) {
 		if (a[i]) {
-			tmp += to_string(6);
+			tmp += to_string(8);
 		}
-		else tmp += to_string(8);
+		else tmp += to_string(6);
 	}
 	v.push_back(tmp);
 }
@@ -40,7 +42,8 @@ int main() {
 			memset(a, 0, sizeof a);
 			Try(1);
 		} 
-		
+		sort(v.begin(), v.end(), cmp);
+		cout << v.size() << "\n";
 		for (auto x : v)
 			cout << x << " ";
 		

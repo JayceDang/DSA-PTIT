@@ -15,11 +15,9 @@ int main() {
 		stack <string> st;
 
 		for (int i = 0; i < s.size(); ++i) {
+            
 			if (priority(s[i])) {
-				string fi = st.top(); st.pop();
-				string se = st.top(); st.pop();
-				string tmp = s[i] + se + fi;
-				st.push(tmp);
+				
 			}
 			else st.push(string(1, s[i]));
 		}
