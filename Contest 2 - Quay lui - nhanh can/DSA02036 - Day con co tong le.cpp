@@ -7,44 +7,40 @@ vector<int> v;
 vector<string> ans;
 
 void printArr() {
-    string res = "";
-    for (int i = 0; i < v.size(); ++i) {
-        res += to_string(v[i]) + " ";   
-    }
-    res.pop_back();
-    ans.push_back(res);
+	string s = "";
+	for (int i = 0; i < v.size(); ++i) {
+		s += to_string(v[i]) + " ";
+	}
+	s.pop_back();
+	ans.push_back(s);
 }
 
 void Try(int i, int sum) {
-    if (sum & 1)
-        printArr();
-    if (i == n) return;
-    for (int j = i+1; j <= n; ++j) {
-        v.push_back(a[j]);
-        Try(j, sum + a[j]);
-        v.pop_back();
-    }
+	if (sum % 2 == 1)
+		printArr();
+	if (i == n)	return;
+	for (int j = i+1; j <= n; ++j) {
+		v.push_back(a[j]);
+		Try(j, sum+a[j]);
+		v.pop_back();
+	}
 }
 
 int main() {
 	int T; cin >> T;
     while (T--) {
         cin >> n;
-
-        for (int i = 1; i <= n; ++i) {
-            cin >> a[i];
-        }
-
-        sort(begin(a) + 1, end(a) + 1, [](int& a, int& b) {
-			return a > b;
-		});
-        Try(0, 0);
-
-        sort(ans.begin(), ans.end());
-
-        for (auto x : ans)
-            cout << x << "\n";
-
+		
+		for (int i = 1; i <= n; ++i) {
+			cin >> a[i];
+		}
+		sort(a+1, a+n+1, greater<int>());
+		
+		Try(0, 0);
+		sort(ans.begin(), ans.end());
+		for (auto x : ans)
+			cout << x << "\n";
+		ans.clear();
         cout << "\n";
     }
 

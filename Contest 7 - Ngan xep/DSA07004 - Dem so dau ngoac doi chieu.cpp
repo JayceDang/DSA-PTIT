@@ -6,23 +6,23 @@ int main() {
     int T; cin >> T;
     while (T--) {
         string s; cin >> s;
-        stack<int> st;
         int cnt = 0;
-        st.push(-1);
-        for (int i = 0; i < s.size(); ++i) {
-            if (s[i] == '(') {
-                st.push(i);
-            }
-            else {
-                st.pop();
-                if (st.size() > 0) {
-                    cnt = max(cnt, i - st.top());
-                }
-                if (st.size() == 0)
-                    st.push(i);
-            }
-        }
         
+        while (s.size()) {
+        	int x = s.find("()");
+        	if (x == -1) {
+        		if (s[0] == ')') {
+        			s[0] = '('; ++cnt;
+				}
+				if (s[s.size()-1] == '(') {
+					s[s.size()-1] = ')'; ++cnt;
+				}
+			}
+			else {
+				s.erase(x, 2);
+			}
+		}    
+    	cout << cnt << "\n";
     }
 
     return (0^_^0);
