@@ -12,26 +12,6 @@ struct Node {
 	}
 };
 
-bool isLeaf(Node* node) {
-	return (node != NULL && node->right == NULL && node->left == NULL);
-}
-
-int SumRightLeaf(Node* root) {
-	if (root == NULL) return 0;
-	int sum = 0;
-	
-	if (isLeaf(root->right)) {
-		sum += root->right->data;
-	}
-	else {
-		sum += SumRightLeaf(root->right);
-	}
-	
-	sum += SumRightLeaf(root->left);
-	
-	return sum;
-}
-
 void build(int n, Node*	&root) {
 	map<int, Node*> mp;
 	int u, v; char c;
@@ -54,14 +34,35 @@ void build(int n, Node*	&root) {
 	}	
 }
 
+void spiral(Node* root) {
+	stack<Node*> s1, s2;
+	s1.push(root);
+	while (!s1.empty() || !s2.empty()) {
+		while (!s1.empty()) {
+			Node* cur = s1.top(); s1.pop();
+			cout << cur->data << " ";
+			if (cur->right != NULL) s2.push(cur->right);
+			if (cur->left != NULL) s2.push(cur->left);
+		}
+		while (!s2.empty()) {
+			Node* cur = s2.top(); s2.pop();
+			cout << cur->data << " ";
+			if (cur->left != NULL) s1.push(cur->left);			
+			if (cur->right != NULL) s1.push(cur->right);
+		}
+	}
+}
+
 int main() {
 	int T; cin >> T;
-	while (T--) {	
+	while (T--) {
 		int n; cin >> n;
 		Node* root = NULL;
-		build(n, root);
-		cout << SumRightLeaf(root) << "\n";
+		build(n, root);	
+		spiral(root);
+		cout << "\n";
 	}
 
 	return (0^_^0);
 }
+

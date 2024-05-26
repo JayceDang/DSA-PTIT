@@ -6,31 +6,11 @@ struct Node {
 	Node* left;
 	Node* right;
 	int data;
-	Node (int data) {
+	Node(int data) {
 		this->data = data;
 		this->right = this->left = NULL;
 	}
-};
-
-bool isLeaf(Node* node) {
-	return (node != NULL && node->right == NULL && node->left == NULL);
-}
-
-int SumRightLeaf(Node* root) {
-	if (root == NULL) return 0;
-	int sum = 0;
-	
-	if (isLeaf(root->right)) {
-		sum += root->right->data;
-	}
-	else {
-		sum += SumRightLeaf(root->right);
-	}
-	
-	sum += SumRightLeaf(root->left);
-	
-	return sum;
-}
+}; 
 
 void build(int n, Node*	&root) {
 	map<int, Node*> mp;
@@ -54,13 +34,27 @@ void build(int n, Node*	&root) {
 	}	
 }
 
+bool isSame(Node* p, Node* q) {
+	if (p == NULL && q == NULL) return true;
+	if (p != NULL && q != NULL) {
+		return (p->data == q->data) && (isSame(p->left, q->left)) && (isSame(p->right, q->right));
+	}
+}
+
 int main() {
 	int T; cin >> T;
-	while (T--) {	
+	while (T--) {
 		int n; cin >> n;
-		Node* root = NULL;
-		build(n, root);
-		cout << SumRightLeaf(root) << "\n";
+		Node* p = NULL;
+		build(n, p);
+		int m; cin >> m;
+		Node* q = NULL;
+		build(m, q);
+		if (isSame(p, q)) {
+			cout << "1\n";
+		}
+		else 
+			cout << "0\n";		
 	}
 
 	return (0^_^0);
